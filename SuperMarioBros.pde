@@ -49,9 +49,9 @@ void onKeyPress(int keyCode){
     if(keyCode == 39)
       game.window.translateBy(new Vec2(0.5, 0));
       
-    if(keyCode == 80)
+    if(keyCode == 80) {
       game.play = !game.play;
-    
+    }
     
 }
 

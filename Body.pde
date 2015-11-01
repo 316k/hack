@@ -94,6 +94,8 @@ class Body{
   
   void draw(){
     //TODO(step1): draw body as a rectangle.
+    fill(0, 0, 0);
+    rect(pos.x, pos.y, size.x, size.y);
   };
   
   

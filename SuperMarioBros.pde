@@ -25,6 +25,34 @@ void draw() {
 }
 
 void onKeyPress(int keyCode){
+    // Player
+    // W
+    game.player.pos.y += (keyCode == 87) ? 0.5 : 0;
+    // A
+    game.player.pos.x += (keyCode == 65) ? -0.5 : 0;
+    // S
+    game.player.pos.y += (keyCode == 83) ? -0.5 : 0;
+    // D
+    game.player.pos.x += (keyCode == 68) ? 0.5 : 0;
+    
+    // World
+    // Up
+    if(keyCode == 38)
+      game.window.translateBy(new Vec2(0, 0.5));
+    // Left
+    if(keyCode == 37)
+      game.window.translateBy(new Vec2(-0.5, 0));
+    // Down
+    if(keyCode == 40)
+      game.window.translateBy(new Vec2(0, -0.5));
+    // Right
+    if(keyCode == 39)
+      game.window.translateBy(new Vec2(0.5, 0));
+      
+    if(keyCode == 80)
+      game.play = !game.play;
+    
+    
 }
 
 void onKeyRelease(int keyCode){

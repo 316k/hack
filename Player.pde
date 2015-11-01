@@ -25,10 +25,13 @@ class Player extends Body {
         
   Player() {}
      
-  void step(float dt){
+  void step(float dt) {
     super.step(dt);
-    
     //TODO(step1): move in a circle
+    float vx = -sin(game.time/100) / 8;
+    float vy = cos(game.time/100) / 8;
+    println(vx + " " + vy);
+    pos.add(new Vec2(vx,vy));
        
     handleTiles();
     handleEnemies();

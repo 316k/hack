@@ -32,22 +32,47 @@ class Game{
     level.load("data/levels/lvl1-1/lvl.txt");  
     activeTriggers = level.copyTriggersArray();
         
-    window.setSize(20,20);
-    // TODO(step1): position window
+    window.setSize(16,16);
+    window.setLeft(19);
+    window.setBottom(19);
     
     player = new Player();
-    //TODO(step1): position and size player
+    player.pos = new Vec2(25, 25);
+    player.size = new Vec2(1, 2);
     
     play = true;
     time = 0;
   }
 
   
-  void step(){
-    //TODO(step1): skip this if "play" is false
-           
+  void step() {
+    if(!play) {
+      return;
+    }
+
     // step all
-    player.step(dt);    
+    player.step(dt);
+    
+    float diff_right = window.right() - player.right();
+    if(diff_right <= 3) {
+         window.translateBy(new Vec2(3 - diff_right, 0));
+    }
+    
+    float diff_left = player.left() - window.left();
+    if(diff_left <= 3) {
+         window.translateBy(new Vec2(diff_left - 3, 0));
+    }
+
+    float diff_top = window.top() - player.top();
+    if(diff_top <= 3) {
+         window.translateBy(new Vec2(0, 3 - diff_top));
+    }
+    
+    float diff_bottom = player.bottom() - window.bottom();
+    if(diff_bottom <= 3) {
+         window.translateBy(new Vec2(0, diff_bottom - 3));
+    }
+    
     for(Enemy enemy : enemies) enemy.step(dt);
     for(Item item : items) item.step(dt);
     for(Body obstacle : obstacles) obstacle.step(dt);
@@ -77,23 +102,19 @@ class Game{
 
   void draw(){
     
-    //TODO(step1): replace this with a checkerboard pattern and a "plus" sign at the origin
-    background(255,0,0);
-    fill(255,255,0);
-    ellipse(10,10,19,19);
-    fill(0,0,0);
-    strokeWeight(0.2);
-    stroke(0,0,0);    
-    fill(255,255,255);
-    ellipse(6,14,4,4);    
-    fill(0,0,255);
-    ellipse(6,14,2,2);
-    fill(0,0,0);
-    rect(12,13.5,4,1);    
-    fill(255,255,255);
-    arc(10,9,12,12,PI,2*PI,CHORD);
-    
-    //TODO(step1): draw the player.
+    background(0,0,0);
+    stroke(0.1);
+    strokeWeight(0);
+    for(int i=0; i < 50; i++) {
+        for(int j=0; j < 50; j++) {
+          int a = (i + j) % 2 == 0 ? 255 : 0;
+          
+          fill(0, a, 255 - a);
+          
+          rect(i, j, 1, 1);
+      }
+    }
+    player.draw();
     
   }
   

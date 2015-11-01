@@ -1,0 +1,62 @@
+0
+
+1
+property=tile type=breakable color=blue imageSet=data/img/tiles/imageSet5
+
+2
+property=tile type=container content=1up n=1 imageSet=data/img/tiles/imageSet6
+
+3
+property=tile type=solid image=data/img/tiles/34.png 
+
+4
+property=tile type=solid image=data/img/tiles/35.png 
+
+5
+property=tile type=solid image=data/img/tiles/42.png 
+
+6
+property=item type=coin imageSet=data/img/tiles/imageSet8
+
+7
+property=tile type=container content=star n=1 imageSet=data/img/tiles/imageSet6
+
+8
+property=tile type=container content=coin n=10 imageSet=data/img/tiles/imageSet6
+
+9
+property=tile type=container content=grow n=1 imageSet=data/img/tiles/imageSet6
+
+:
+property=tile type=solid image=data/img/tiles/36.png 
+
+;
+property=tile type=solid image=data/img/tiles/37.png 
+
+<
+property=tile type=solid image=data/img/tiles/38.png 
+
+=
+property=tile type=container content=grow n=1 imageSet=data/img/tiles/imageSet7
+
+>
+property=tile type=container content=coin n=1 imageSet=data/img/tiles/imageSet7
+
+?
+property=tile type=solid image=data/img/tiles/43.png 
+
+@
+property=tile type=solid image=data/img/tiles/32.png 
+
+A
+property=tile type=solid image=data/img/tiles/33.png 
+
+B
+property=tile type=solid image=data/img/tiles/39.png 
+
+C
+property=tile type=solid image=data/img/tiles/40.png 
+
+D
+property=tile type=solid image=data/img/tiles/41.png 
+

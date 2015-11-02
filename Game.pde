@@ -107,9 +107,16 @@ class Game {
         }
         
         window.setLeft(max(window.left(), 0));
-        // FIXME window.setLeft(min(level.width() - window.left(), window.left()));
+        
+        if(window.right() > level.width()) {
+            window.setLeft(level.width() - window.width());
+        }
+        
         window.setBottom(max(window.bottom(), 0));
-        // FIXME window.setBottom(min(level.height() - 1, window.bottom()));
+        
+       if(window.top() > level.height() + 2) {
+            window.setBottom(level.height() + 2 - window.height());
+        }
     }
     
     for(Enemy enemy : enemies) enemy.step(dt);

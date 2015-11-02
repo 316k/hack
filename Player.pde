@@ -37,23 +37,24 @@ class Player extends Body {
     }
     handleTiles();
     handleEnemies();
-    handleItems();
+    handleItems(); //<>//
     handleObstacles(); //<>// //<>//
   }
-  
-  void interactWith(Tile tile){ //<>// //<>//
+   //<>//
+  void interactWith(Tile tile){ 
+    Vec2 v = tile.computePushOut(this); 
+    pos.add(v);
   }   
   
   void interactWith(Enemy enemy){  
   }
   
-  void interactWith(Item item){
+  void interactWith(Item item){ //<>//
   }
-  
+   //<>//
   void interactWith(Body body){ //<>//
     
-    Vec2 v = body.computePushOut(this); //<>//
-    println("hello");
+    Vec2 v = body.computePushOut(this); 
     pos.add(v);
   }
  //<>//

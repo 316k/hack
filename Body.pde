@@ -67,9 +67,9 @@ class Body{
     
     if(abs(depX )<= abs(depY)) //<>//
       v.add(depX, 0);
-    else //<>//
+    else //<>// //<>//
       v.add(0, depY);
-    return v;  
+    return v;   //<>//
   }
   
   
@@ -80,10 +80,23 @@ class Body{
   }
   void handleTiles(){
     // select tiles close to the body, and interract with them.
-    ArrayList<Tile> tiles = new ArrayList<Tile>();
-    for(Tile tile : tiles)
-      if(tile != null && this.intersects(tile))
-        this.interactWith(tile);
+    //TODO VRAIMENT LAID, SUPER SPAGAT
+    for(int i = 0; i < game.level.width(); ++i) {
+          for(int j = 0; j < game.level.height(); ++j) {
+            Tile tile = game.level.getTile(i, j);
+            
+            if(tile == null)
+                continue;
+            
+            tile.pos = new Vec2(i, game.level.height() - 1 - j);
+            tile.size = new Vec2(1, 1);
+            if(this.intersects(tile)){
+              println("ohai "+i+ " " +j + " " + game.level.width() + " " + game.level.height());
+              this.interactWith(tile);
+            }
+          }
+        }
+      
   }
   void handleItems(){
     // interact with dynamic objects

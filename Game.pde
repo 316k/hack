@@ -177,7 +177,6 @@ class Game {
     drawer.draw(world + "-" + level_no, window.left() + 10, level.height());
     
     // Time
-    println(time);
     drawer.draw("TIME", window.right() - 3, level.height() + 1);
     drawer.draw(nf((int) time/100, 3), window.right() - 2.5, level.height());
   }

@@ -37,10 +37,10 @@ class Player extends Body {
     handleTiles();
     handleEnemies();
     handleItems();
-    handleObstacles(); //<>//
+    handleObstacles(); //<>// //<>//
   }
   
-  void interactWith(Tile tile){ //<>//
+  void interactWith(Tile tile){ //<>// //<>//
   }   
   
   void interactWith(Enemy enemy){  
@@ -50,6 +50,10 @@ class Player extends Body {
   }
   
   void interactWith(Body body){ //<>//
+    
+    Vec2 v = body.computePushOut(this); //<>//
+    println("hello");
+    pos.add(v);
   }
  //<>//
   boolean valid(){ return alive; }

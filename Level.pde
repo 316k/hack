@@ -145,6 +145,8 @@ class Level {
           if (properties.get("type").equals("solid")) {
           
             currentCellContent.tile = new SolidTile();
+            currentCellContent.tile.size = new Vec2(1, 1);
+            
             currentCellContent.tile.img = resources.getImage(properties.get("image"));
             
           } else if (properties.get("type").equals("breakable")) {

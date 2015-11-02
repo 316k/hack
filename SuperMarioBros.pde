@@ -35,6 +35,12 @@ void onKeyPress(int keyCode){
     // D
     game.player.pos.x += (keyCode == 68) ? 0.5 : 0;
     
+    game.player.pos.x = max(game.player.pos.x, 0);
+    game.player.pos.y = max(game.player.pos.y, 0);
+
+    game.player.pos.x = min(game.player.pos.x, game.level.width() - 1);
+    game.player.pos.y = min(game.player.pos.y, game.level.height() - 1);
+    
     // World
     // Up
     if(keyCode == 38)

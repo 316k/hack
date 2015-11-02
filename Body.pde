@@ -52,14 +52,14 @@ class Body{
     || (left() <= body.left()     && body.left() <= right())
     || (body.left() <= right()    && right() <= body.right())
     || (body.left() <= left()     && left() <= body.right()))
-    && (bottom() <= body.bottom() && body.bottom() <= top())
+    && ((bottom() <= body.bottom() && body.bottom() <= top())
     || (bottom() <= body.top()    && body.top() <= top())
     || (body.bottom() <= bottom() && bottom() <= body.top() )
-    || (body.bottom() <= top()    && top() <= body.top()))) ;
+    || (body.bottom() <= top()    && top() <= body.top()));
     
-    
+     //<>//
   }
-  
+   //<>//
     
   // computes the shortest translation to apply to body so it doesn't intersect with this.
   Vec2 computePushOut(Body body) {

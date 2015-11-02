@@ -27,7 +27,7 @@ class Level {
         for(int i = 0; i < width(); ++i) {
           for(int j = 0; j < height(); ++j) {
             if(backgroundImages[i][j] != null) {
-                drawer.draw(backgroundImages[i][j], i, height() - 2 - j);
+                drawer.draw(backgroundImages[i][j], i, height() - 1 - j);
             }
           }
         }
@@ -37,7 +37,7 @@ class Level {
         for(int i = 0; i < width(); ++i) {
           for(int j = 0; j < height(); ++j) {
             if(tiles[i][j] != null) {
-                drawer.draw(tiles[i][j].img, i, height() - 2 - j);
+                drawer.draw(tiles[i][j].img, i, height() - 1 - j);
             }
           }
         }

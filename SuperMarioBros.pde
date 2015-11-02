@@ -25,6 +25,7 @@ void draw() {
 }
 
 void onKeyPress(int keyCode){
+
     // Player
     // W
     game.player.pos.y += (keyCode == 87) ? 0.5 : 0;
@@ -40,6 +41,14 @@ void onKeyPress(int keyCode){
 
     game.player.pos.x = min(game.player.pos.x, game.level.width() - 1);
     game.player.pos.y = min(game.player.pos.y, game.level.height() - 1);
+    
+    println(keyCode);
+    
+    if(keyCode == 48 || (50 <= keyCode && keyCode <= 57)) {
+        keyCode = (keyCode == 48 ? 58 : keyCode); // 0 devrait aller après 9
+        game.player.pos.x = min(game.level.width() * (keyCode - 50)/8, game.level.width() - 1);
+        
+    }
     
     // World
     // Up

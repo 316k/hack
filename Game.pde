@@ -11,7 +11,7 @@ class Game {
   float last_step_dt = 0;
   
   boolean fleche = false;
-  Vec2 vectur;
+  Vec2 vectur, gravity = new Vec2(0, -0.05);
   
   boolean solveObstacles=false;
   ArrayList<Item> items = new ArrayList<Item>();

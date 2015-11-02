@@ -24,17 +24,26 @@ class Player extends Body {
   ImageSet imgSet;
   int lives = 3;
         
-  Player() {}
+  Player() {
+    damping = new Vec2(0.9, 0.9);
+  }
      
   void step(float dt) {
     super.step(dt);
     
+    // Mode pour tourner en rond
     if(turns) {
         float vx = -sin(game.time/100) / 8;
         float vy = cos(game.time/100) / 8;
         
         pos.add(new Vec2(vx,vy));
     }
+    
+    accel = game.gravity;
+    vel = vel.add(dt * accel.x, dt * accel.y);
+    vel.set(damping.x * dt * vel.x, damping.y * dt * vel.y);
+    pos.add(dt * vel.x, dt * vel.y);
+    
     handleTiles();
     handleEnemies();
     handleItems(); //<>//

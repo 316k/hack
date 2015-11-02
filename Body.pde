@@ -88,8 +88,6 @@ class Body{
             if(tile == null)
                 continue;
             
-            tile.pos = new Vec2(i, game.level.height() - 1 - j);
-            tile.size = new Vec2(1, 1);
             if(this.intersects(tile)){
               println("ohai "+i+ " " +j + " " + game.level.width() + " " + game.level.height());
               this.interactWith(tile);

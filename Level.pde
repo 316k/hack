@@ -17,7 +17,6 @@ class Level {
   int width(){ return tiles.length; }
   int height(){ return tiles[0].length; }
   
-  // Nopes, utiliser des getters pour accéder à des éléments privés, c'est des plans pour pas savoir que quelque chose plante
   Image getBackgroundImage(int i, int j){ return (i < 0 || i >= width() || j < 0 || j >= height())? null : backgroundImages[i][j]; }  
   Tile getTile(int i, int j){ return (i < 0 || i >= width() || j < 0 || j >= height())? null : tiles[i][j]; }
   Item getStaticItem(int i, int j){ return (i < 0 || i >= width() || j < 0 || j >= height())? null : staticItems[i][j]; }
@@ -89,12 +88,12 @@ class Level {
         tiles[i][j] = tileProperties.get(map[i][j]).tile;
         if(tiles[i][j] != null) {
           tiles[i][j] = tiles[i][j].copy();
-          tiles[i][j].pos.set(i,j);
+          tiles[i][j].pos.set(i,h - 1 - j);
         }
         staticItems[i][j] = tileProperties.get(map[i][j]).item;
         if(staticItems[i][j] != null) {
           staticItems[i][j] = staticItems[i][j].copy();
-          staticItems[i][j].pos.set(i,j);
+          staticItems[i][j].pos.set(i,h - 1 - j);
         }        
       }
     }

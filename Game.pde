@@ -118,19 +118,14 @@ class Game{
   }
 
   void draw(){
-    
-    background(0,0,0);
-    stroke(0.1);
+    background(level.backgroundColor.r, level.backgroundColor.g, level.backgroundColor.b);
+    fill(level.backgroundColor.r, level.backgroundColor.g, level.backgroundColor.b);
     strokeWeight(0);
-    for(int i=0; i < 50; i++) {
-        for(int j=0; j < 50; j++) {
-          int a = (i + j) % 2 == 0 ? 255 : 0;
-          
-          fill(0, a, 255 - a);
-          
-          rect(i, j, 1, 1);
-      }
-    }
+    rect(0, 0, 50, 52);
+    level.drawBackgroundImages();
+    level.drawTiles();
+    level.drawItems();
+
     player.draw();
     for(Body b: obstacles){
       b.draw();

@@ -1,10 +1,10 @@
-class CellContent{
+class CellContent {
   Tile tile = null;
   Image background = null;
   Item item = null;
 }
 
-class Level{
+class Level {
   Color backgroundColor = new Color();
   Image[][] backgroundImages = new Image[0][0];
   Tile[][] tiles = new Tile[0][0];
@@ -17,23 +17,38 @@ class Level{
   int width(){ return tiles.length; }
   int height(){ return tiles[0].length; }
   
+  // Nopes, utiliser des getters pour accéder à des éléments privés, c'est des plans pour pas savoir que quelque chose plante
   Image getBackgroundImage(int i, int j){ return (i < 0 || i >= width() || j < 0 || j >= height())? null : backgroundImages[i][j]; }  
   Tile getTile(int i, int j){ return (i < 0 || i >= width() || j < 0 || j >= height())? null : tiles[i][j]; }
   Item getStaticItem(int i, int j){ return (i < 0 || i >= width() || j < 0 || j >= height())? null : staticItems[i][j]; }
   
   
-  void drawBackgroundImages(){
-  }
-  void drawTiles(){
-  }
+    void drawBackgroundImages() {
+        for(int i = 0; i < width(); ++i) {
+          for(int j = 0; j < height(); ++j) {
+            if(backgroundImages[i][j] != null) {
+                drawer.draw(backgroundImages[i][j], i, height() - 2 - j);
+            }
+          }
+        }
+    }
+  
+    void drawTiles() {
+        for(int i = 0; i < width(); ++i) {
+          for(int j = 0; j < height(); ++j) {
+            if(tiles[i][j] != null) {
+                drawer.draw(tiles[i][j].img, i, height() - 2 - j);
+            }
+          }
+        }
+    }
+
   void drawItems(){
   }
   
   // ***** LOADING FUNCTIONS *****
   void load(String file) {
     
-    //TODO(step3): uncomment this
-    /*
     // read lvl.txt
     String path = (file.lastIndexOf("/") >= 0)? file.substring(0, file.lastIndexOf("/")+1) : ""; 
     String mapFile = null, cellPropertiesFile = null, triggerFile = null;
@@ -68,8 +83,8 @@ class Level{
     staticItems = new Item[w][h];
         
     // creates the tile array based on the read symbols and their properties.
-    for(int i = 0; i < w; ++i){
-      for(int j = 0; j < h; ++j){        
+    for(int i = 0; i < w; ++i) {
+      for(int j = 0; j < h; ++j) {
         backgroundImages[i][j] = tileProperties.get(map[i][j]).background;
         tiles[i][j] = tileProperties.get(map[i][j]).tile;
         if(tiles[i][j] != null) {
@@ -83,29 +98,33 @@ class Level{
         }        
       }
     }
-    */
   }
   
-  private char[][] loadMap(String file){
+  private char[][] loadMap(String file) {
     String[] lines = loadStrings(file);
     int w = lines[0].length(), h = lines.length;
     char[][] map = new char[w][h];
     
-    //TODO(step3): read the file and fill the map array
+    for(int i=0; i < h; i++) {
+        for(int j=0; j < w; j++) {
+            map[j][i] = lines[i].charAt(j);
+        }
+    }
     
     return map;
   }
   
     
-  private HashMap<Character, CellContent> loadTileProperties(String file){
+  private HashMap<Character, CellContent> loadTileProperties(String file) {
     HashMap<Character, CellContent> tileProperties = new HashMap<Character, CellContent>();
     String[] lines = loadStrings(file);
     CellContent currentCellContent = null;
     char index = (char)-1;
-    for(String line : lines){
+    
+    for(String line : lines) {
       String[] tokens = line.split(" ");
       if(tokens[0].length() == 0 || tokens[0].charAt(0) == '%') continue;
-      if(tokens[0].length() == 1){
+      if(tokens[0].length() == 1) {
         index = tokens[0].charAt(0);
         currentCellContent = new CellContent();
         tileProperties.put(index, currentCellContent);
@@ -120,11 +139,14 @@ class Level{
         }
         
         if(properties.get("property").equals("background")) {
-          //TODO(step3)
-        } else if(properties.get("property").equals("tile")) { 
+          currentCellContent.background = resources.getImage(properties.get("image"));
+        } else if(properties.get("property").equals("tile")) {
           
           if (properties.get("type").equals("solid")) {
-            //TODO(step3)
+          
+            currentCellContent.tile = new SolidTile();
+            currentCellContent.tile.img = resources.getImage(properties.get("image"));
+            
           } else if (properties.get("type").equals("breakable")) {
             //TODO(step6)
           } else if(properties.get("type").equals("container")) {

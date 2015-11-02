@@ -92,10 +92,13 @@ class Body{
         this.interactWith(obstacle);
   }
   
-  void draw(){
-    //TODO(step1): draw body as a rectangle.
-    fill(0, 0, 0);
-    rect(pos.x, pos.y, size.x, size.y);
+  void draw() {
+    if(img == null) {
+        fill(0, 0, 0);
+        rect(pos.x, pos.y, size.x, size.y);
+        return;
+    }
+    drawer.draw(img, pos.x, pos.y);
   };
   
   

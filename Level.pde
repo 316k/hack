@@ -26,7 +26,7 @@ class Level {
         for(int i = 0; i < width(); ++i) {
           for(int j = 0; j < height(); ++j) {
             if(backgroundImages[i][j] != null) {
-                drawer.draw(backgroundImages[i][j], i, height() - 1 - j);
+                drawer.draw(backgroundImages[i][j], i, j);
             }
           }
         }
@@ -36,7 +36,8 @@ class Level {
         for(int i = 0; i < width(); ++i) {
           for(int j = 0; j < height(); ++j) {
             if(tiles[i][j] != null) {
-                drawer.draw(tiles[i][j].img, i, height() - 1 - j);
+                Tile t = tiles[i][j];
+                drawer.draw(t.img, t.pos.x, t.pos.y);
             }
           }
         }
@@ -88,12 +89,12 @@ class Level {
         tiles[i][j] = tileProperties.get(map[i][j]).tile;
         if(tiles[i][j] != null) {
           tiles[i][j] = tiles[i][j].copy();
-          tiles[i][j].pos.set(i,h - 1 - j);
+          tiles[i][j].pos.set(i, j);
         }
         staticItems[i][j] = tileProperties.get(map[i][j]).item;
         if(staticItems[i][j] != null) {
           staticItems[i][j] = staticItems[i][j].copy();
-          staticItems[i][j].pos.set(i,h - 1 - j);
+          staticItems[i][j].pos.set(i, j);
         }        
       }
     }
@@ -106,7 +107,7 @@ class Level {
     
     for(int i=0; i < h; i++) {
         for(int j=0; j < w; j++) {
-            map[j][i] = lines[i].charAt(j);
+            map[j][h - 1 - i] = lines[i].charAt(j);
         }
     }
     

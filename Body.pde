@@ -57,7 +57,7 @@ class Body{
     || (body.bottom() <= bottom() && bottom() <= body.top() )
     || (body.bottom() <= top()    && top() <= body.top()));
   }
-   //<>//
+   //<>// //<>// //<>//
     
   // computes the shortest translation to apply to body so it doesn't intersect with this.
   Vec2 computePushOut(Body body) {
@@ -65,31 +65,29 @@ class Body{
     float depX = (abs(left()-body.right()) <= abs(right()-body.left()))? left()-body.right() : right()-body.left();
     float depY = (abs(top()-body.bottom()) <= abs(bottom()-body.top()))? top()-body.bottom() : bottom()-body.top();
     
-    if(abs(depX )<= abs(depY)) //<>//
+    if(abs(depX )<= abs(depY)) //<>// //<>// //<>//
       v.add(depX, 0);
-    else //<>// //<>//
+    else //<>// //<>// //<>// //<>//
       v.add(0, depY);
-    return v;   //<>//
+    return v;   //<>// //<>// //<>//
   }
   
   
-  // interraction loop functions. //<>//
+  // interraction loop functions. //<>// //<>// //<>//
   void handlePlayer(){
-    if(this.intersects(game.player)) //<>//
+    if(this.intersects(game.player)) //<>// //<>// //<>//
       interactWith(game.player);
   }
   void handleTiles(){
     // select tiles close to the body, and interract with them.
-    //TODO VRAIMENT LAID, SUPER SPAGAT
-    for(int i = 0; i < game.level.width(); ++i) {
-          for(int j = 0; j < game.level.height(); ++j) {
+    for(int i = floor(this.left()); i < ceil(this.right()); ++i) {
+          for(int j = floor(this.bottom()); j < ceil(this.top()); ++j) {
             Tile tile = game.level.getTile(i, j);
             
             if(tile == null)
                 continue;
-            
+            println("ohai "+i+ " " +j+" " + tile.pos.x+" " +tile.pos.y);
             if(this.intersects(tile)){
-              println("ohai "+i+ " " +j + " " + game.level.width() + " " + game.level.height());
               this.interactWith(tile);
             }
           }

@@ -74,6 +74,10 @@ void onKeyPress(int keyCode){
     if(keyCode == 49) {
       game.init();
     }
+    //O = toggle obstacles
+    if(keyCode == 79){
+      game.solveObstacles = !game.solveObstacles;
+    }
     
     
 }

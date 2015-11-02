@@ -63,9 +63,9 @@ class Body{
   Vec2 computePushOut(Body body) {
     Vec2 v = new Vec2(0,0);
     float depX = (abs(left()-body.right()) <= abs(right()-body.left()))? left()-body.right() : right()-body.left();
-    float depY = (abs(top()-body.bottom()) <= abs(top()-body.bottom()))? top()-body.bottom() : bottom()-body.top();
+    float depY = (abs(top()-body.bottom()) <= abs(bottom()-body.top()))? top()-body.bottom() : bottom()-body.top();
     
-    if(depX >= depY) //<>//
+    if(abs(depX )<= abs(depY)) //<>//
       v.add(depX, 0);
     else //<>//
       v.add(0, depY);
@@ -104,7 +104,7 @@ class Body{
   }
   void handleObstacles(){
     for(Body obstacle : game.obstacles)
-      if(this.intersects(obstacle))
+      if(this.intersects(obstacle)&&game.solveObstacles)
         this.interactWith(obstacle);
   }
   

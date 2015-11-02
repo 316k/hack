@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-class Game{
+class Game {
   Level level = new Level();
   float time;
   float dt = 1;
@@ -13,6 +13,7 @@ class Game{
   boolean fleche = false;
   Vec2 vectur;
   
+  boolean solveObstacles=false;
   ArrayList<Item> items = new ArrayList<Item>();
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   ArrayList<Animation> animations = new ArrayList<Animation>();
@@ -65,20 +66,22 @@ class Game{
     if(!play) {
       return;
     }
-
     // step all
     player.step(dt);
+    fleche = false;
     for(Body b: obstacles){
       if(b.intersects(player)){
           b.setColor(new Color(255,140,0));
           vectur = b.computePushOut(player);
-          println(vectur.x + " " + vectur.y);
+          
+    println(solveObstacles);
+          if(!solveObstacles){
           fleche =true;
+          }
           
       }
       else{
         b.setColor(new Color(100,0,100));
-        fleche = false;
       }
     }
     
@@ -136,8 +139,9 @@ class Game{
     time -= dt;
   }
 
-  void draw() {
-  
+  void draw(){
+    stroke(0);
+    
     background(level.backgroundColor.r, level.backgroundColor.g, level.backgroundColor.b);
     fill(level.backgroundColor.r, level.backgroundColor.g, level.backgroundColor.b);
 
@@ -150,6 +154,14 @@ class Game{
 
     for(Body b: obstacles){
       b.draw();
+    }
+
+    player.draw();
+       
+    if(fleche){
+        strokeWeight(0.1); 
+        stroke(255, 255, 255);
+        line(player.centerx(), player.centery(), player.centerx()+vectur.x, player.centery()+vectur.y);
     }
 
     // Score
@@ -168,7 +180,6 @@ class Game{
     println(time);
     drawer.draw("TIME", window.right() - 3, level.height() + 1);
     drawer.draw(nf((int) time/100, 3), window.right() - 2.5, level.height());
-    player.draw();
   }
   
 }

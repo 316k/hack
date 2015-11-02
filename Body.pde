@@ -52,10 +52,10 @@ class Body{
     || (left() <= body.left()     && body.left() <= right())
     || (body.left() <= right()    && right() <= body.right())
     || (body.left() <= left()     && left() <= body.right()))
-    && (bottom() <= body.bottom() && body.bottom() <= top())
+    && ((bottom() <= body.bottom() && body.bottom() <= top())
     || (bottom() <= body.top()    && body.top() <= top())
     || (body.bottom() <= bottom() && bottom() <= body.top() )
-    || (body.bottom() <= top()    && top() <= body.top()))) ;
+    || (body.bottom() <= top()    && top() <= body.top()));
     
     
   }
@@ -63,7 +63,15 @@ class Body{
     
   // computes the shortest translation to apply to body so it doesn't intersect with this.
   Vec2 computePushOut(Body body) {
-    return new Vec2(0,0);  
+    Vec2 v = new Vec2(0,0);
+    float depX = (abs(left()-body.right()) <= abs(right()-body.left()))? left()-body.right() : right()-body.left();
+    float depY = (abs(top()-body.bottom()) <= abs(top()-body.bottom()))? top()-body.bottom() : bottom()-body.top();
+    
+    if(depX >= depY) //<>//
+      v.add(depX, 0);
+    else //<>//
+      v.add(0, depY);
+    return v;  
   }
   
   

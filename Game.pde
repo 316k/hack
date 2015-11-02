@@ -8,11 +8,16 @@ class Game{
   Window window;
   Player player;
   
+  boolean fleche = false;
+  Vec2 vectur;
+  
   ArrayList<Item> items = new ArrayList<Item>();
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   ArrayList<Animation> animations = new ArrayList<Animation>();
   ArrayList<Body> obstacles = new ArrayList<Body>();
   ArrayList<Trigger> activeTriggers = new ArrayList<Trigger>();
+  
+  
     
   Game(){
     window = new Window();
@@ -54,6 +59,7 @@ class Game{
   boolean deplaceW = true;
   
   void step() {
+    
     if(!play) {
       return;
     }
@@ -63,9 +69,14 @@ class Game{
     for(Body b: obstacles){
       if(b.intersects(player)){
           b.setColor(new Color(255,140,0));
+          vectur = b.computePushOut(player);
+          println(vectur.x + " " + vectur.y);
+          fleche =true;
+          
       }
       else{
         b.setColor(new Color(100,0,100));
+        fleche = false;
       }
     }
     if(deplaceW){
@@ -126,10 +137,17 @@ class Game{
     level.drawTiles();
     level.drawItems();
 
-    player.draw();
     for(Body b: obstacles){
       b.draw();
     }
+    player.draw();
+        /*
+
+    line(
+    if(fleche){
+           fill(255, 255, 255);
+          line(player.centerx(), player.centery(), vectur.x, vectur.y);
+    }*/
   }
   
 }

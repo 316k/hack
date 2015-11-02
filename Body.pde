@@ -46,8 +46,18 @@ class Body{
   
   
   // says whether body intersects another or not.
-  boolean intersects(Body body){ 
-    return false;
+  boolean intersects(Body body){
+    return 
+       ((left() <= body.right()   && body.right() <= right())
+    || (left() <= body.left()     && body.left() <= right())
+    || (body.left() <= right()    && right() <= body.right())
+    || (body.left() <= left()     && left() <= body.right()))
+    && (bottom() <= body.bottom() && body.bottom() <= top())
+    || (bottom() <= body.top()    && body.top() <= top())
+    || (body.bottom() <= bottom() && bottom() <= body.top() )
+    || (body.bottom() <= top()    && top() <= body.top()))) ;
+    
+    
   }
   
     
@@ -94,7 +104,7 @@ class Body{
   
   void draw(){
     //TODO(step1): draw body as a rectangle.
-    fill(0, 0, 0);
+    fill(bodyColor.r, bodyColor.g, bodyColor.b);
     rect(pos.x, pos.y, size.x, size.y);
   };
   

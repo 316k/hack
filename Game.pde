@@ -39,11 +39,19 @@ class Game{
     player = new Player();
     player.pos = new Vec2(25, 25);
     player.size = new Vec2(1, 2);
+    for(int i = 0; i < random(5,20); i++){
+      obstacles.add(new Body(random(0,50),random(0,50),random(1,10),random(1,10)));
+    }
+    for(Body b: obstacles){
+      b.setColor(new Color(100,0,100));
+    }
+    
     
     play = true;
     time = 0;
   }
-
+  
+  boolean deplaceW = true;
   
   void step() {
     if(!play) {
@@ -52,7 +60,15 @@ class Game{
 
     // step all
     player.step(dt);
-    
+    for(Body b: obstacles){
+      if(b.intersects(player)){
+          b.setColor(new Color(255,140,0));
+      }
+      else{
+        b.setColor(new Color(100,0,100));
+      }
+    }
+    if(deplaceW){
     float diff_right = window.right() - player.right();
     if(diff_right <= 3) {
          window.translateBy(new Vec2(3 - diff_right, 0));
@@ -71,6 +87,7 @@ class Game{
     float diff_bottom = player.bottom() - window.bottom();
     if(diff_bottom <= 3) {
          window.translateBy(new Vec2(0, diff_bottom - 3));
+    }
     }
     
     for(Enemy enemy : enemies) enemy.step(dt);
@@ -115,7 +132,9 @@ class Game{
       }
     }
     player.draw();
-    
+    for(Body b: obstacles){
+      b.draw();
+    }
   }
   
 }

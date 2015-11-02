@@ -20,7 +20,7 @@ class Player extends Body {
   
   boolean alive = true;
   boolean isCrouching;
-  
+  boolean turns = false;
   ImageSet imgSet;      
         
   Player() {}
@@ -28,11 +28,12 @@ class Player extends Body {
   void step(float dt) {
     super.step(dt);
     //TODO(step1): move in a circle
+    if(turns){
     float vx = -sin(game.time/100) / 8;
     float vy = cos(game.time/100) / 8;
-    println(vx + " " + vy);
+    
     pos.add(new Vec2(vx,vy));
-       
+    }
     handleTiles();
     handleEnemies();
     handleItems();

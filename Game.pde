@@ -7,7 +7,7 @@ class Game {
   boolean play;
   Window window;
   Player player;
-  int world = 1, level_no = 2, coins = 0;
+  int world = 1, level_no = 1, coins = 0;
   float last_step_dt = 0;
   
   boolean fleche = false;
@@ -87,10 +87,10 @@ class Game {
       }
     }
     for(int i = 0; i<4; i++){
-      enemies.add(new Goomba(random(1, level.width()), 2));
+      //enemies.add(new Goomba(random(1, level.width()), 2));
     }
     for(int i = 0; i<10; i++){
-      enemies.add(new Koopa(random(1, level.width()), 2));
+      //enemies.add(new Koopa(random(1, level.width()), 2));
     }
     for(Enemy e: enemies){
       if(e instanceof Koopa){
@@ -117,7 +117,6 @@ class Game {
           b.setColor(new Color(255,140,0));
           vectur = b.computePushOut(player);
           
-    println(solveObstacles);
           if(!solveObstacles){
           fleche =true;
           }
@@ -170,8 +169,9 @@ class Game {
     // check triggers
     for(Iterator<Trigger> it = activeTriggers.iterator(); it.hasNext();) {
       Trigger trigger = it.next();
-      if(trigger.triggered())
+      if(trigger.triggered()){
         trigger.activate();
+      }
     }
     
     // cleanup

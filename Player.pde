@@ -27,13 +27,29 @@ class Player extends Body {
   Player() {
     damping = new Vec2(0.9, 0.9);
   }
+  
+  void draw(){
+    imgSet = bigMarioSet;
+    if(alive){
+      if(isCrouching){
+        img = imgSet.get("crouch");
+      }else if(vel.length()==0){
+        img = imgSet.get("idle");
+      }else {
+        img = imgSet.get("run");
+      }
+    }else{
+      img = imgSet.get("dead");
+    }
+    super.draw();
+  }
      
   void step(float dt) {
     super.step(dt);
-    
-    // Mode pour tourner en rond
+     //<>//
+    // Mode pour tourner en rond //<>//
     if(turns) {
-        float vx = -sin(game.time/100) / 8;
+        float vx = -sin(game.time/100) / 8; //<>//
         float vy = cos(game.time/100) / 8;
         
         pos.add(new Vec2(vx,vy));
@@ -42,16 +58,15 @@ class Player extends Body {
     
     // Motion
     accel = game.gravity;
-
+ //<>//
     accel.x = 0.2 * (Keyboard.isPressed(68) ? 1 : (Keyboard.isPressed(65) ? -1 : 0));
-    
-    println(vel.y);
-    
+     //<>//
+     //<>//
     if(Keyboard.isPressed(87) && vel.y > 0 && vel.y < 0.7) {
         vel.y += 0.2;
     }
     
-    
+     //<>//
     vel = vel.add(dt * accel.x, dt * accel.y);
     vel.set(damping.x * dt * vel.x, damping.y * dt * vel.y);
     

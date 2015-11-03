@@ -59,7 +59,7 @@ class Body{
     || (body.bottom() <= top()    && top() <= body.top()));
   }
     
-  // computes the shortest translation to apply to body so it doesn't intersect with this.
+  // computes the shortest translation to apply to body so it doesn't intersect with this. //<>//
   Vec2 computePushOut(Body body) {
     Vec2 v = new Vec2(0,0);
     float depX = (abs(left()-body.right()) < abs(right()-body.left()))? left()-body.right() : right()-body.left();
@@ -67,18 +67,17 @@ class Body{
     
     
     if(abs(depX) <= abs(depY))
-      v.add(depX, 0);
+      v.add(depX, 0); //<>//
     else
-      v.add(0, depY);
+      v.add(0, depY); //<>//
     
-    println("dep : (" + v.x + ", " + v.y + ")");
-    
+     //<>//
     return v;
   }
   
-  
+   //<>//
   // interraction loop functions.
-  void handlePlayer(){
+  void handlePlayer(){ //<>//
     if(this.intersects(game.player))
       interactWith(game.player);
   }

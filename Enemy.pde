@@ -12,14 +12,14 @@ abstract class Enemy extends Body {
     vel.set(0.1,0);
     pos.set(x,y);
   }
-    
+    ImageSet imgSet = null;
   // **** stepping ****
   void step(float dt){
-    if(!alive) return; //<>//
+    if(!alive) return; //<>// //<>//
     handleTiles();
-    super.step(dt); //<>//
+    super.step(dt); //<>// //<>//
   }
-    //<>// //<>//
+    //<>// //<>// //<>//
   boolean valid(){ return alive; }
   
   void interactWith(Tile tile){
@@ -33,7 +33,7 @@ abstract class Enemy extends Body {
 // ************ GOOMBA ************
 
 class Goomba extends Enemy {
-  ImageSet imgSet = null;
+  
   
   // **** constructors ****
   Goomba(float x, float y) { 
@@ -43,15 +43,25 @@ class Goomba extends Enemy {
   // **** stepping ****
   void step(float dt){
     if(!alive) return;
-    super.step(dt); //<>//
-  }   //<>//
+    super.step(dt); //<>// //<>//
+  }   //<>// //<>//
+  
+  void draw(){
+    if(imgSet != null){
+      if(!alive){
+        img = imgSet.get("dead");
+      }else{
+        img = imgSet.get("walking");
+      }
+    }
+  super.draw();
+}
 }
 
 
 // ************ KOOPA *************
 
 class Koopa extends Enemy {
-  ImageSet imgSet = null;
   
   // **** constructors ****
   Koopa(float x, float y) {
@@ -63,5 +73,42 @@ class Koopa extends Enemy {
     if(!alive) return;
     super.step(dt);
   }
+  void draw(){
+    if(imgSet != null){
+      if(!alive){
+        img = imgSet.get("dead");
+      }else{
+        img = imgSet.get("walking");
+      }
+    }
+  super.draw();
+}
+  
+}
+
+// ************ PIRANA PLANT *************
+
+class PiranaPlant extends Enemy {
+  
+  // **** constructors ****
+  PiranaPlant(float x, float y) {
+    super(x, y);
+  }
+  
+  // **** stepping ****
+  void step(float dt){
+    if(!alive) return;
+    super.step(dt);
+  }
+  void draw(){
+    if(imgSet != null){
+      if(!alive){
+        img = imgSet.get("dead");
+      }else{
+        img = imgSet.get("eating");
+      }
+    }
+  super.draw();
+}
   
 }

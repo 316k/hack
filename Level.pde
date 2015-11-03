@@ -68,7 +68,7 @@ class Level {
       if(properties.get("property").equals("background")) { backgroundColor.set(int(properties.get("r")), int(properties.get("g")), int(properties.get("b"))); }
       if(properties.get("property").equals("map")) { mapFile = path+properties.get("file"); }
       if(properties.get("property").equals("cellProperties")) { cellPropertiesFile = path+properties.get("file"); }
-      if(properties.get("property").equals("triggers")) { triggerFile = path+properties.get("file"); }
+      if(properties.get("property").equals("triggers")) { triggerFile = path+properties.get("file");}
       
     }
     
@@ -119,7 +119,6 @@ class Level {
     HashMap<Character, CellContent> tileProperties = new HashMap<Character, CellContent>();
     String[] lines = loadStrings(file);
     CellContent currentCellContent = null;
-    println(lines);
     char index = (char)-1;
     
     for(String line : lines) {
@@ -169,12 +168,15 @@ class Level {
   private ArrayList<Trigger> loadTriggers(String file){
     ArrayList<Trigger> triggers = new ArrayList<Trigger>();
     String[] lines = loadStrings(file);
+    println(lines.length);
     for(String line : lines){
     
       // read trigger properties
       String[] tokens = line.split(" ");
       if(tokens[0].length() == 0 || tokens[0].charAt(0) == '%') continue;
+      
       HashMap<String, String> properties = new HashMap<String, String>();
+      
       for(int iToken = 0; iToken < tokens.length; iToken++) {
         String[] tokenParts = tokens[iToken].split("=");
         String name = tokenParts[0];
@@ -182,12 +184,29 @@ class Level {
         properties.put(name, value);
       }
       
-      // TODO(step6): create the right trigger depending on the read properties and add it to the triggers array (only do Goomba and Koopa for now)
+      int x = (int) properties.get("x").charAt(0);
+      int y = (int) properties.get("y").charAt(0);
+        println(properties.get("type")+" "+properties.get("type").equals("goomba"));
+      
+      if(properties.get("type").equals("goomba")|| properties.get("type").equals("koopa")){
+        
+        Enemy mechant = new Goomba(x,y);
+        EnemyTrigger enemyT = new EnemyTrigger();
+        if(properties.get("type").equals("goomba")){
+          mechant = new Goomba(x,y);
+        }if(properties.get("type").equals("koopa")){
+          mechant = new Koopa(x,y);
+        }
+        mechant.imgSet = new ImageSet(properties.get("imageSet"));
+        enemyT.enemy = mechant;
+        triggers.add(enemyT);
     }
+  }
     return triggers;
   }
   
   ArrayList<Trigger> copyTriggersArray() {
+    println(triggers.size());
     ArrayList<Trigger> result = new ArrayList<Trigger>();
     for(Trigger trig : triggers) {
       result.add(trig);

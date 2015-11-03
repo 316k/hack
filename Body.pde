@@ -44,9 +44,8 @@ class Body{
   float centerx(){ return pos.x + size.x/2; }
   float centery(){ return pos.y + size.y/2; }
   
-  
   // says whether body intersects another or not.
-  boolean intersects(Body body){
+  boolean intersects(Body body) {
     return 
        ((left() <= body.right()   && body.right() <= right())
     || (left() <= body.left()     && body.left() <= right())
@@ -54,39 +53,40 @@ class Body{
     || (body.left() <= left()     && left() <= body.right()))
     && ((bottom() <= body.bottom() && body.bottom() <= top())
     || (bottom() <= body.top()    && body.top() <= top())
-    || (body.bottom() <= bottom() && bottom() <= body.top() )
+    || (body.bottom() <= bottom() && bottom() <= body.top())
     || (body.bottom() <= top()    && top() <= body.top()));
   }
-   //<>// //<>// //<>//
     
   // computes the shortest translation to apply to body so it doesn't intersect with this.
   Vec2 computePushOut(Body body) {
     Vec2 v = new Vec2(0,0);
-    float depX = (abs(left()-body.right()) <= abs(right()-body.left()))? left()-body.right() : right()-body.left();
-    float depY = (abs(top()-body.bottom()) <= abs(bottom()-body.top()))? top()-body.bottom() : bottom()-body.top();
+    float depX = (abs(left()-body.right()) < abs(right()-body.left()))? left()-body.right() : right()-body.left();
+    float depY = (abs(top()-body.bottom()) < abs(bottom()-body.top()))? top()-body.bottom() : bottom()-body.top();
     
-    if(abs(depX )<= abs(depY)) //<>// //<>// //<>//
+    
+    if(abs(depX) <= abs(depY))
       v.add(depX, 0);
-    else //<>// //<>// //<>// //<>//
+    else
       v.add(0, depY);
-    return v;   //<>// //<>// //<>//
+    println("dep : (" + v.x + ", " + v.y + ")");
+    
+    return v;
   }
   
   
-  // interraction loop functions. //<>// //<>// //<>//
+  // interraction loop functions.
   void handlePlayer(){
-    if(this.intersects(game.player)) //<>// //<>// //<>//
+    if(this.intersects(game.player))
       interactWith(game.player);
   }
   void handleTiles(){
     // select tiles close to the body, and interract with them.
-    for(int i = floor(this.left()); i < ceil(this.right()); ++i) {
-          for(int j = floor(this.bottom()); j < ceil(this.top()); ++j) {
+    for(int i = floor(this.left()) - 1; i < ceil(this.right()) + 1; ++i) {
+          for(int j = floor(this.bottom()) - 1; j < ceil(this.top()) + 1; ++j) {
             Tile tile = game.level.getTile(i, j);
             
             if(tile == null)
                 continue;
-            println("ohai "+i+ " " +j+" " + tile.pos.x+" " +tile.pos.y);
             if(this.intersects(tile)){
               this.interactWith(tile);
             }

@@ -26,24 +26,6 @@ void draw() {
 
 void onKeyPress(int keyCode){
 
-    // Player
-    // W
-    game.player.pos.y += (keyCode == 87) ? 0.5 : 0;
-    // A
-    game.player.pos.x += (keyCode == 65) ? -0.5 : 0;
-    // S
-    game.player.pos.y += (keyCode == 83) ? -0.5 : 0;
-    // D
-    game.player.pos.x += (keyCode == 68) ? 0.5 : 0;
-    
-    game.player.pos.x = max(game.player.pos.x, 0);
-    game.player.pos.y = max(game.player.pos.y, 0);
-
-    game.player.pos.x = min(game.player.pos.x, game.level.width() - 1);
-    game.player.pos.y = min(game.player.pos.y, game.level.height() - 1);
-    
-    println(keyCode);
-    
     if(keyCode == 48 || (50 <= keyCode && keyCode <= 57)) {
         keyCode = (keyCode == 48 ? 58 : keyCode); // 0 devrait aller après 9
         game.player.pos.x = min(game.level.width() * (keyCode - 50)/8, game.level.width() - 1);
@@ -63,6 +45,7 @@ void onKeyPress(int keyCode){
     // Right
     if(keyCode == 39)
       game.window.translateBy(new Vec2(0.5, 0));
+    
     //P mettre sur pause l'execution automatique  
     if(keyCode == 80) {
       game.play = !game.play;

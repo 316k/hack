@@ -39,16 +39,43 @@ class Player extends Body {
         pos.add(new Vec2(vx,vy));
     }
     
+    
+    // Motion
     accel = game.gravity;
+
+    accel.x = 0.2 * (Keyboard.isPressed(68) ? 1 : (Keyboard.isPressed(65) ? -1 : 0));
+    
+    println(vel.y);
+    
+    if(Keyboard.isPressed(87) && vel.y > 0 && vel.y < 0.7) {
+        vel.y += 0.2;
+    }
+    
+    
     vel = vel.add(dt * accel.x, dt * accel.y);
     vel.set(damping.x * dt * vel.x, damping.y * dt * vel.y);
-    pos.add(dt * vel.x, dt * vel.y);
+    
+    pos.add(new Vec2(dt * vel.x, dt * vel.y).clamp(-0.49, 0.49));
+    
+    // Crouch
+    isCrouching = Keyboard.isPressed(83);
+    size.set(0.99, isCrouching ? 0.99 : 2);
+    
+    
+    // TODO
+    // pos.y += 1 * (Keyboard.isPressed(87) ? 1 : (Keyboard.isPressed(83) ? -1 : 0));
+    
+    // Limits
+    pos.x = max(pos.x, 0);
+    pos.y = max(pos.y, 0);
+    pos.x = min(pos.x, game.level.width() - 1);
+    pos.y = min(pos.y, game.level.height() - 1);
     
     handleTiles();
-    handleEnemies();
-    handleItems(); //<>//
+    handleEnemies(); //<>//
+    handleItems(); //<>// //<>//
     handleObstacles(); //<>// //<>//
-  }
+  } //<>//
    //<>//
   void interactWith(Tile tile){ 
     Vec2 v = tile.computePushOut(this); 
@@ -57,15 +84,15 @@ class Player extends Body {
   
   void interactWith(Enemy enemy){  
   }
-  
-  void interactWith(Item item){ //<>//
-  }
    //<>//
+  void interactWith(Item item){ //<>//
+  } //<>//
+   //<>// //<>//
   void interactWith(Body body){ //<>//
     
     Vec2 v = body.computePushOut(this); 
     pos.add(v);
-  }
+  } //<>//
  //<>//
   boolean valid(){ return alive; }
 

@@ -25,7 +25,7 @@ class Vec2{
   float length(){ return (float)Math.sqrt(x*x+y*y); }
   Vec2 normalize(){ return div(length()); }
   float dot(Vec2 o){ return x*o.x+y*o.y; }
-  Vec2 clamp(float min, float max){ 
+  Vec2 clamp(float min, float max) {
     if(x<min) x=min; 
     else if(x>max) x=max;
     if(y<min) y=min; 

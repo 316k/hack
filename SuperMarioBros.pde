@@ -29,49 +29,52 @@ void onKeyPress(int keyCode){
     if(keyCode == 48 || (50 <= keyCode && keyCode <= 57)) {
         keyCode = (keyCode == 48 ? 58 : keyCode); // 0 devrait aller après 9
         game.player.pos.x = min(game.level.width() * (keyCode - 50)/8, game.level.width() - 1);
-        
+    }
+    
+    else if(keyCode == 68) {
+        game.player.flipX = false;
+    } else if(keyCode == 65) {
+        game.player.flipX = true;
     }
     
     // World
     // Up
-    if(keyCode == 38)
+    else if(keyCode == 38)
       game.window.translateBy(new Vec2(0, 0.5));
     // Left
-    if(keyCode == 37)
+    else if(keyCode == 37)
       game.window.translateBy(new Vec2(-0.5, 0));
     // Down
-    if(keyCode == 40)
+    else if(keyCode == 40)
       game.window.translateBy(new Vec2(0, -0.5));
     // Right
-    if(keyCode == 39)
+    else if(keyCode == 39)
       game.window.translateBy(new Vec2(0.5, 0));
     
     //P mettre sur pause l'execution automatique  
-    if(keyCode == 80) {
+    else if(keyCode == 80) {
       game.play = !game.play;
     }
     //T = tourner
-    if(keyCode == 84) {
+    else if(keyCode == 84) {
       game.player.turns = !game.player.turns;
     }
     //M toggle mouse control 
-    if(keyCode == 77) {
+    else if(keyCode == 77) {
       mouse = !mouse;
     }
     //L toggle window movement 
-    if(keyCode == 76) {
+    else if(keyCode == 76) {
       game.deplaceW = !game.deplaceW;
     }
     //1 pour init
-    if(keyCode == 49) {
+    else if(keyCode == 49) {
       game.init();
     }
     //O = toggle obstacles
-    if(keyCode == 79){
+    else if(keyCode == 79){
       game.solveObstacles = !game.solveObstacles;
     }
-    
-    
 }
 
 void onKeyRelease(int keyCode){

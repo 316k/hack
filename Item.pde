@@ -100,7 +100,21 @@ class Star extends Item{
   Star() { super(0,0); }
   Star(float x, float y) {
     super(x, y);
+    accel.set(0,-0.01);
+    vel.set(0.1, 0);
+  }
+  void step(float dt){
+    super.step(dt);
+    handleTiles();
   }
   Star(Star o){ super(o); }
   Star copy(){ return new Star(this); }
+  
+  void interactWith(Tile tile){
+     Vec2 v = tile.computePushOut(this);
+     float x = (v.x == 0)? 1 : -1*v.x/abs(v.x);
+     float y = (v.y == 0)? 1 : -1*v.y/abs(v.y);
+     vel.mult(x,y);
+     pos.add(v);
+  }
 }

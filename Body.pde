@@ -7,7 +7,7 @@ class Body{
   Vec2 pos = new Vec2(); // position of botom-left corner
   Vec2 size = new Vec2(1);  
   Vec2 vel = new Vec2();
-  Vec2 accel = new Vec2();
+  Vec2 accel = new Vec2(0,0);
   Vec2 damping = new Vec2(1,1);
   Image img = null;
   boolean visible = true;
@@ -19,7 +19,7 @@ class Body{
   
   // **** constructors ****
   Body(){}
-  Body(float x, float y){ pos.x = x; pos.y = y; }
+  Body(float x, float y){ pos.x = x; pos.y = y;}
   Body(float x, float y, float sx, float sy){ pos.x = x; pos.y = y; size.x = sx; size.y = sy; }
   Body(Body o){
     pos = o.pos.copy();
@@ -34,6 +34,8 @@ class Body{
   
   // **** stepping ****
   void step(float dt) {
+    pos.add(vel);
+    vel.add(accel);
   }
   
   // **** Utilitary functions ****
@@ -68,6 +70,7 @@ class Body{
       v.add(depX, 0);
     else
       v.add(0, depY);
+    
     println("dep : (" + v.x + ", " + v.y + ")");
     
     return v;
@@ -113,7 +116,7 @@ class Body{
   }
   void handleObstacles(){
     for(Body obstacle : game.obstacles)
-      if(this.intersects(obstacle)&&game.solveObstacles)
+      if(this.intersects(obstacle)) 
         this.interactWith(obstacle);
   }
   

@@ -9,17 +9,23 @@ abstract class Enemy extends Body {
   // **** constructors ****
   Enemy(float x, float y) {
     super();
+    vel.set(0.1,0);
     pos.set(x,y);
   }
     
   // **** stepping ****
   void step(float dt){
     if(!alive) return; //<>//
+    handleTiles();
     super.step(dt); //<>//
   }
     //<>// //<>//
   boolean valid(){ return alive; }
   
+  void interactWith(Tile tile){
+    vel.x = -vel.x;
+    pos.add(computePushOut(tile));
+  }
 }
 
 

@@ -46,8 +46,8 @@ class Player extends Body {
     accel.x = 0.04 * (Keyboard.isPressed(68) ? 1 : (Keyboard.isPressed(65) ? -1 : 0));
     
     // Jump
-    if(Keyboard.isPressed(87)) {
-        vel.y += 0.2;
+    if(Keyboard.isPressed(87) && vel.y == game.gravity.y) {
+        vel.y += 1.8;
     }
     
     vel.add(dt * accel.x, dt * accel.y);
@@ -78,10 +78,11 @@ class Player extends Body {
     pos.add(v);
     
     if(v.x != 0) {
-        println("vx" + v.x);
         vel.x = 0;
-    } else
+    } else if(v.y != 0) {
+        println("vy" + v.y);
         vel.y = 0;
+    }
     
   }   
   

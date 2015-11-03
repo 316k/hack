@@ -119,6 +119,7 @@ class Level {
     HashMap<Character, CellContent> tileProperties = new HashMap<Character, CellContent>();
     String[] lines = loadStrings(file);
     CellContent currentCellContent = null;
+    println(lines);
     char index = (char)-1;
     
     for(String line : lines) {
@@ -156,7 +157,9 @@ class Level {
           }
           
         } else if(properties.get("property").equals("item")) {
-          //TODO(step7)
+            //currentCellContent.item= new Item();
+           // currentCellContent.item.size = new Vec2(1, 1);
+           // currentCellContent.item.img = resources.getImage("data/img/items/flower/%d.png");
         }
       }
     }

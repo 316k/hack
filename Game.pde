@@ -7,7 +7,7 @@ class Game {
   boolean play;
   Window window;
   Player player;
-  int world = 1, level_no = 1, coins = 0;
+  int world = 1, level_no = 2, coins = 0;
   float last_step_dt = 0;
   
   boolean fleche = false;
@@ -48,14 +48,54 @@ class Game {
     player = new Player();
     player.pos = new Vec2(1, 2);
     player.size = new Vec2(1, 2);
+    player.setColor(new Color(255, 255, 255));
     for(int i = 0; i < random(5,20); i++){
-      obstacles.add(new Body(random(0,50),random(0,50),random(1,10),random(1,10)));
+      //obstacles.add(new Body(random(0,50),random(0,50),random(1,10),random(1,10)));
     }
     for(Body b: obstacles){
       b.setColor(new Color(100,0,100));
     }
-    
-    
+    for(int i = 0; i<4; i++){
+      items.add(new Star(random(1, level.width()), 2));
+      
+    }
+    for(int i = 0; i<4; i++){
+      items.add(new Mushroom(random(1, level.width()), 2));
+    }
+    for(int i = 0; i<4; i++){
+      items.add(new OneUp(random(1, level.width()), 2));
+    }
+    for(int i = 0; i<4; i++){
+      items.add(new Flower(random(1, level.width()), 2));
+    }
+    items.add(new Star(5,5));
+    for(Item i: items){
+      if(i instanceof Flower){
+        i.img = resources.getImage("data/img/items/flower/%d.png");
+      }
+      if(i instanceof Mushroom){
+        i.img = resources.getImage("data/img/items/mushroom.png");
+      }
+      if(i instanceof OneUp){
+        i.img = resources.getImage("data/img/items/oneUp.png");
+      }
+      if(i instanceof Star){
+        i.img = resources.getImage("data/img/items/star/%d.png");
+      }
+    }
+    for(int i = 0; i<4; i++){
+      enemies.add(new Goomba(random(1, level.width()), 2));
+    }
+    for(int i = 0; i<10; i++){
+      enemies.add(new Koopa(random(1, level.width()), 2));
+    }
+    for(Enemy e: enemies){
+      if(e instanceof Koopa){
+      e.setColor(new Color(100, 30, 70));
+      }if(e instanceof Goomba){
+        e.setColor(new Color(30, 30, 100));
+      }
+    }
     play = true;
     time = 40000;
   }
@@ -158,7 +198,12 @@ class Game {
     level.drawTiles();
     level.drawItems();
     
-
+    for(Item i: items){
+      i.draw();
+    }
+for(Enemy i: enemies){
+      i.draw();
+    }
     for(Body b: obstacles){
       b.draw();
     }

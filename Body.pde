@@ -11,6 +11,7 @@ class Body{
   Vec2 damping = new Vec2(1,1);
   Image img = null;
   boolean visible = true;
+  boolean flipX = false;
   
   //color of the body
   Color bodyColor = new Color();
@@ -48,55 +49,89 @@ class Body{
   
   // says whether body intersects another or not.
   boolean intersects(Body body) {
-    return 
+    return abs(centerx() - body.centerx()) <= abs(size.x/2 + body.size.x/2) &&
+        abs(centery() - body.centery()) <= abs(size.y/2 + body.size.y/2);
+    /*
        ((left() <= body.right()   && body.right() <= right())
     || (left() <= body.left()     && body.left() <= right())
     || (body.left() <= right()    && right() <= body.right())
     || (body.left() <= left()     && left() <= body.right()))
-    && ((bottom() <= body.bottom() && body.bottom() <= top())
+   && ((bottom() <= body.bottom() && body.bottom() <= top())
     || (bottom() <= body.top()    && body.top() <= top())
     || (body.bottom() <= bottom() && bottom() <= body.top())
-    || (body.bottom() <= top()    && top() <= body.top()));
+    || (body.bottom() <= top()    && top() <= body.top()));*/
   }
-    
-  // computes the shortest translation to apply to body so it doesn't intersect with this. //<>//
+  
+  // computes the shortest translation to apply to body so it doesn't intersect with this.
   Vec2 computePushOut(Body body) {
     Vec2 v = new Vec2(0,0);
-    float depX = (abs(left()-body.right()) < abs(right()-body.left()))? left()-body.right() : right()-body.left();
-    float depY = (abs(top()-body.bottom()) < abs(bottom()-body.top()))? top()-body.bottom() : bottom()-body.top();
     
+    float depX = 0;
+    float depY = 0;
+
+    depX = size.x/2f + body.size.x/2f - abs(centerx() - body.centerx());
+    depY = size.y/2f + body.size.y/2f - abs(centery() - body.centery());
     
-    if(abs(depX) <= abs(depY))
-      v.add(depX, 0); //<>//
+    if(this instanceof Player)
+        println(depX + " + " + depY);
+    
+    if(abs(depX) < abs(depY))
+      v.add((centerx() > body.centerx() ? -1 : 1) * depX, 0);
     else
-      v.add(0, depY); //<>//
+      v.add(0, (centery() > body.centery() ? -1 : 1) * depY);
     
-     //<>//
     return v;
   }
   
-   //<>//
   // interraction loop functions.
-  void handlePlayer(){ //<>//
+  void handlePlayer() {
     if(this.intersects(game.player))
       interactWith(game.player);
   }
-  void handleTiles(){
-    // select tiles close to the body, and interract with them.
-    for(int i = floor(this.left()) - 1; i < ceil(this.right()) + 1; ++i) {
-          for(int j = floor(this.bottom()) - 1; j < ceil(this.top()) + 1; ++j) {
-            Tile tile = game.level.getTile(i, j);
-            
-            if(tile == null)
-                continue;
-            if(this.intersects(tile)){
-              this.interactWith(tile);
-            }
-          }
-        }
-      
+  
+  float distanceTo(Body body) {
+    float x = centerx() - body.centerx();
+    float y = centery() - body.centery();
+    
+    return sqrt(x * x + y * y);
   }
-  void handleItems(){
+  
+  void handleTiles(){
+    ArrayList<Tile> tiles = new ArrayList<Tile>();
+    for(int i= max(floor(left()),0) ; i<= min(ceil(right()),game.level.width()-1) ; i++) {
+      for(int j= max(floor(bottom()),0) ; j< min(ceil(top()),game.level.height()-1); j++) {
+        if(game.level.tiles[i][j] != null){
+          tiles.add(game.level.tiles[i][j]);
+        }
+      }
+    }
+    // sort
+    Tile tempTile;
+    int n=tiles.size();
+    for(int i=0; i<n; i++) {
+     int closestTileId = -1;
+     float smallestDistance = 1.0e10;
+     for(int j=i; j<n; j++) {
+       float dist = this.distanceTo(tiles.get(j));
+       if(dist < smallestDistance) {
+         closestTileId = j;
+         smallestDistance = dist;
+       }
+     }
+     tempTile = tiles.get(closestTileId);
+     tiles.set(closestTileId, tiles.get(i));
+     tiles.set(i, tempTile);
+    }
+    //    
+    for(Tile tile : tiles){
+     
+      if(tile != null && this.intersects(tile))
+        this.interactWith(tile);
+    }
+  }
+
+  
+  void handleItems() {
     // interact with dynamic objects
     for(Item item : game.items)
       if(this.intersects(item))
@@ -125,7 +160,8 @@ class Body{
         rect(pos.x, pos.y, size.x, size.y);
         return;
     }
-    drawer.draw(img, pos.x, pos.y);
+    
+    drawer.draw(img, pos.x, pos.y, flipX);
   };
   
   

@@ -204,9 +204,11 @@ class Game {
     for(Item i: items){
       i.draw();
     }
-for(Enemy i: enemies){
+    
+    for(Enemy i: enemies){
       i.draw();
     }
+    
     for(Body b: obstacles){
       b.draw();
     }

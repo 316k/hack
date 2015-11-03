@@ -10,10 +10,11 @@ class EnemyTrigger implements Trigger{
   boolean completed = false;
     
   boolean triggered() {
-    return abs(game.player.pos.x-enemy.pos.x)<16.1;
+    return abs(game.player.pos.x-enemy.pos.x)<5;
 }
   void activate() {
-    //game.enemies.add(enemy);
+   println(enemy.pos.x);
+    game.enemies.add(enemy);
     completed = true;
   }
   

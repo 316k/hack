@@ -54,7 +54,9 @@ class Goomba extends Enemy {
         img = imgSet.get("walking");
       }
     }
-  super.draw();
+    println(pos.x+" "+pos.y+" "+img);
+     drawer.draw(img, pos.x, pos.y);
+  //super.draw();
 }
 }
 

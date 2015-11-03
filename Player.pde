@@ -19,7 +19,7 @@ class Player extends Body {
   
   
   boolean alive = true;
-  boolean isCrouching;
+  boolean isCrouching = false;
   boolean turns = false;
   ImageSet imgSet;
   int lives = 3;
@@ -27,13 +27,29 @@ class Player extends Body {
   Player() {
     damping = new Vec2(0.8, 0.8);
   }
+  
+  void draw(){
+    imgSet = bigMarioSet;
+    if(alive){
+      if(isCrouching){
+        img = imgSet.get("crouch");
+      }else if(vel.length()==0){
+        img = imgSet.get("idle");
+      }else {
+        img = imgSet.get("run");
+      }
+    }else{
+      img = imgSet.get("dead");
+    }
+    super.draw();
+  }
      
   void step(float dt) {
     super.step(dt);
-    
-    // Mode pour tourner en rond
+     //<>//
+    // Mode pour tourner en rond //<>//
     if(turns) {
-        float vx = -sin(game.time/100) / 8;
+        float vx = -sin(game.time/100) / 8; //<>//
         float vy = cos(game.time/100) / 8;
         
         pos.add(new Vec2(vx,vy));

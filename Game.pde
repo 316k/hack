@@ -87,10 +87,10 @@ class Game {
       }
     }
     for(int i = 0; i<4; i++){
-      enemies.add(new Goomba(random(1, level.width()), 2));
+      //enemies.add(new Goomba(random(1, level.width()), 2));
     }
     for(int i = 0; i<10; i++){
-      enemies.add(new Koopa(random(1, level.width()), 2));
+      //enemies.add(new Koopa(random(1, level.width()), 2));
     }
     for(Enemy e: enemies){
       if(e instanceof Koopa){
@@ -169,8 +169,9 @@ class Game {
     // check triggers
     for(Iterator<Trigger> it = activeTriggers.iterator(); it.hasNext();) {
       Trigger trigger = it.next();
-      if(trigger.triggered())
+      if(trigger.triggered()){
         trigger.activate();
+      }
     }
     
     // cleanup

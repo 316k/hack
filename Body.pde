@@ -11,6 +11,7 @@ class Body{
   Vec2 damping = new Vec2(1,1);
   Image img = null;
   boolean visible = true;
+  boolean flipX = false;
   
   //color of the body
   Color bodyColor = new Color();
@@ -81,7 +82,6 @@ class Body{
     
     return v;
   }
-  
   
   // interraction loop functions.
   void handlePlayer() {
@@ -160,7 +160,8 @@ class Body{
         rect(pos.x, pos.y, size.x, size.y);
         return;
     }
-    drawer.draw(img, pos.x, pos.y);
+    
+    drawer.draw(img, pos.x, pos.y, flipX);
   };
   
   

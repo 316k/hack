@@ -1,6 +1,6 @@
 # Hackothon DIRO ~ Automne 2015
 
-Commentaires
+Commentaires, par Alizée Gagnon, Stéphanie Larocque et Nicolas Hurtubise
 
 
 ## Documentation

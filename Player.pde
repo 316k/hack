@@ -25,7 +25,7 @@ class Player extends Body {
   int lives = 3;
         
   Player() {
-    damping = new Vec2(0.9, 0.9);
+    damping = new Vec2(0.8, 0.8);
   }
      
   void step(float dt) {
@@ -43,27 +43,23 @@ class Player extends Body {
     // Motion
     accel = game.gravity;
 
-    accel.x = 0.2 * (Keyboard.isPressed(68) ? 1 : (Keyboard.isPressed(65) ? -1 : 0));
+    accel.x = 0.04 * (Keyboard.isPressed(68) ? 1 : (Keyboard.isPressed(65) ? -1 : 0));
     
-    println(vel.y);
-    
-    if(Keyboard.isPressed(87) && vel.y > 0 && vel.y < 0.7) {
+    // Jump
+    if(Keyboard.isPressed(87)) {
         vel.y += 0.2;
     }
     
-    
-    vel = vel.add(dt * accel.x, dt * accel.y);
-    vel.set(damping.x * dt * vel.x, damping.y * dt * vel.y);
+    vel.add(dt * accel.x, dt * accel.y);
+    vel.mult(damping);
+    vel.mult(dt);
     
     pos.add(new Vec2(dt * vel.x, dt * vel.y).clamp(-0.49, 0.49));
     
     // Crouch
     isCrouching = Keyboard.isPressed(83);
-    size.set(0.99, isCrouching ? 0.99 : 2);
+    size.set(1, isCrouching ? 1 : 2);
     
-    
-    // TODO
-    // pos.y += 1 * (Keyboard.isPressed(87) ? 1 : (Keyboard.isPressed(83) ? -1 : 0));
     
     // Limits
     pos.x = max(pos.x, 0);
@@ -72,14 +68,21 @@ class Player extends Body {
     pos.y = min(pos.y, game.level.height() - 1);
     
     handleTiles();
-    handleEnemies(); //<>//
-    handleItems(); //<>// //<>//
-    handleObstacles(); //<>// //<>//
-  } //<>//
-   //<>//
-  void interactWith(Tile tile){ 
+    handleEnemies();
+    handleItems();
+    handleObstacles();
+  }
+
+  void interactWith(Tile tile) {
     Vec2 v = tile.computePushOut(this); 
     pos.add(v);
+    
+    if(v.x != 0) {
+        println("vx" + v.x);
+        vel.x = 0;
+    } else
+        vel.y = 0;
+    
   }   
   
   void interactWith(Enemy enemy){  

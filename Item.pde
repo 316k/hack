@@ -115,6 +115,6 @@ class Star extends Item{
      float x = (v.x == 0)? 1 : -1*v.x/abs(v.x);
      float y = (v.y == 0)? 1 : -1*v.y/abs(v.y);
      vel.mult(x,y);
-     pos.add(v);
+     pos.add(v.clamp(-0.40, 0.40));
   }
 }

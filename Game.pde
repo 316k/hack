@@ -7,7 +7,7 @@ class Game {
   boolean play;
   Window window;
   Player player;
-  int world = 1, level_no = 2, coins = 0;
+  int world = 1, level_no = 1, coins = 0;
   float last_step_dt = 0;
   
   boolean fleche = false;
@@ -48,11 +48,11 @@ class Game {
     player = new Player();
     player.pos = new Vec2(1, 2);
 
-    player.size = new Vec2(0.96, 2);
+    player.size = new Vec2(1, 2);
 
     player.bodyColor = new Color(255, 255, 255);
 
-    for(int i = 0; i < random(5,20); i++){
+    for(int i = 0; i < random(5, 20); i++){
       //obstacles.add(new Body(random(0,50),random(0,50),random(1,10),random(1,10)));
     }
     for(Body b: obstacles){
@@ -117,7 +117,6 @@ class Game {
           b.setColor(new Color(255,140,0));
           vectur = b.computePushOut(player);
           
-    println(solveObstacles);
           if(!solveObstacles){
           fleche =true;
           }
